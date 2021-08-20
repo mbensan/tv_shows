@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h4>Nuevo Show</h4>
+  <div class="row">
+    <form class="col s12" method="POST" action="/shows/new" id="create-form">
+      {% csrf_token %}
+      <div class="row">
+        <div class="input-field col s6">
+          <input placeholder="Placeholder" id="name" name="name" type="text" class="validate">
+          <label for="first_name">Nombre</label>
+        </div>
+        <div class="input-field col s6">
+          <select name="house_id">
+            <option value="">Elija una Casa</option>
+            {% for house in houses %}
+              <option value="{{house.id}}">{{ house.name }}</option>
+            {% endfor %}
+          </select>
+          <label for="last_name">House</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input placeholder="Placeholder" id="name" name="pet" type="text" class="validate">
+          <label for="Mascota">Mascota</label>
+        </div>
+        <div class="input-field col s6">
+          <input placeholder="Placeholder" id="year" name="year" type="text" class="validate">
+          <label for="first_name">Año</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input placeholder="Placeholder" name="avatar" type="url" class="validate">
+          <label for="Mascota">Imagen</label>
+        </div>
+      </div>
+      <input type="submit" value="Crear" class="waves-effect waves-light btn">
+
+    </form>
+  </div>
+{% endblock %}

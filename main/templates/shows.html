@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+<style>
+    .avatar {
+        width: 100%;
+        display: block;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <h4>Lista de Magos</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Casa</th>
+                <th>Mascota</th>
+                <th>Acciones</th>
+                <th>Foto</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for wizard in wizards %}
+            <tr>
+                <td>{{ wizard.name }}</td>
+                <td>{{ wizard.house.name }}</td>
+                <td>{{ wizard.pet }}</td>
+                <td>
+                    <a href="/shows/{{wizard.id}}/edit">Editar</a>
+                    <!--<a href="/shows/{{wizard.id}}/destroy">Borrar</a>-->
+                    <button data-target="modal1" class="btn modal-trigger modal-borrar" data-href="/shows/{{wizard.id}}/destroy">Borrar</button>
+                </td>
+                <td>
+                    <img class="avatar" src="{{wizard.avatar}}" alt="">
+                </td>
+            </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+          <h4>Borrar Mago</h4>
+          <p>¿Está seguro que desea borrar este mago?</p>
+      </div>
+      <div class="modal-footer">
+          <a href="#" id="confirmar-borrar" class="btn red modal-close waves-effect waves-green btn-flat">Si</a>
+      </div>
+    </div>
+
+    <script>
+      $('.modal-borrar').on('click', function(){
+        const href = $(this).attr('data-href');
+        //console.log(href);
+        $('#confirmar-borrar').attr('href', href)
+      })
+    </script>
+{% endblock %}
+
