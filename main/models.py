@@ -1,6 +1,29 @@
 from django.db import models
 
 
+class UsersManager(models.Manager):
+
+    def basic_validator(self, postData):
+        errors = {}
+
+        if len(postData['name']) < 4:
+            errors["name"] = "El nombre de usuario debe tener al menos 4 letras"
+        
+        if len(postData['email']) < 4:
+            errors["email"] = "El email de usuario debe tener al menos 4 letras"
+        
+        if len(postData['password']) < 6:
+            errors["password"] = "La contraseña de usuario debe tener al menos 6 letras"
+        
+        if postData['password'] != postData['password_confirm']:
+            errors["password"] = "Ambas contraseñas deben ser iguales"
+        
+        return errors
+
+
+
+
+'''
 class WizardsManager(models.Manager):
     
     def basic_validator(self, postData):
@@ -24,6 +47,25 @@ class WizardsManager(models.Manager):
             errors["year"] = "El campo 'Año' debe ser un número"
         
         return errors
+'''
+
+class Users(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    password = models.CharField(max_length=255)
+    allowed = models.BooleanField(default=True)
+    avatar = models.URLField(
+        default='https://images.squarespace-cdn.com/content/v1/54b7b93ce4b0a3e130d5d232/1519987020970-8IQ7F6Z61LLBCX85A65S/icon.png?format=1000w'
+    )
+
+    create_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    objects = UsersManager()
+
+    def __repr__(self) -> str:
+        return f'{self.id}: {self.name}'
+
 
 
 class Houses(models.Model):
@@ -50,7 +92,7 @@ class Wizards(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    objects = WizardsManager()
+    # objects = WizardsManager()
 
     def __repr__(self) -> str:
         return f'{self.id}: {self.name}'

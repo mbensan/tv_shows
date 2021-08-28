@@ -14,9 +14,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   {% load static %}
   <link rel="stylesheet" href="{% static 'styles.css' %}">
-  {% block styles %}
   <style>
+    .user {
+      display: inline-block;
+      margin-right: 1rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      background-color: darkcyan;
+      font-weight: bold;
+    }
   </style>
+  {% block styles %}
   {% endblock %}
 </head>
 <body>
@@ -26,7 +34,8 @@
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="/shows">Magos</a></li>
         <li><a href="/shows/create">Nuevo Mago</a></li>
-        <li><a href="collapsible.html">Magodito</a></li>
+        <li> <div class="span user">Hola {{request.session.user.name}}!</div> </li>
+        <li><a href="/logout">Salir</a></li>
       </ul>
     </div>
   </nav>
